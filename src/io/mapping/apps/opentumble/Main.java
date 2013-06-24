@@ -1,22 +1,25 @@
 package io.mapping.apps.opentumble;
 
-import com.google.bitcoin.core.Address;
-import com.google.bitcoin.core.ECKey;
-
 public class Main {
 	public static void main(String... args) {
-		Key key = Key.createKey();
-		ECKey ecKey = key.getKey();
+		KeyNetworkFactory keyNetworkFactory = new ProdNetKeyNetworkFactory();
+		keyNetworkFactory.setEcKeyCreator(RandomEcKeyCreator.getCreator());
+		keyNetworkFactory.createKey();
 
-		String publicKey = new String(ecKey.getPubKey());
-		String privateKey = new String(ecKey.getPrivKeyBytes());
+		System.out.println(keyNetworkFactory.getEcKey().toStringWithPrivate());
 
-		Address address = ecKey.toAddress(key.getNetworkParameters());
-
-		System.out.println("Key:\t" + ecKey.toStringWithPrivate());
-		System.out.println("Key hash:\t" + new String(ecKey.getPubKeyHash()));
-		System.out.println("Address:\t" + address.toString());
-		System.out.println("Public:\t" + publicKey);
-		System.out.println("Private:\t" + privateKey);
+//		KeyNetworkFactory keyNetworkFactory = KeyNetworkFactory.createKey();
+//		ECKey ecKey = keyNetworkFactory.getEcKey();
+//
+//		String publicKey = new String(ecKey.getPubKey());
+//		String privateKey = new String(ecKey.getPrivKeyBytes());
+//
+//		Address address = ecKey.toAddress(keyNetworkFactory.getNetworkParameters());
+//
+//		System.out.println("KeyNetworkFactory:\t" + ecKey.toStringWithPrivate());
+//		System.out.println("KeyNetworkFactory hash:\t" + new String(ecKey.getPubKeyHash()));
+//		System.out.println("Address:\t" + address.toString());
+//		System.out.println("Public:\t" + publicKey);
+//		System.out.println("Private:\t" + privateKey);
 	}
 }
