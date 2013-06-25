@@ -3,12 +3,16 @@ package io.mapping.apps.opentumble;
 import com.google.bitcoin.core.NetworkParameters;
 
 /**
- * Defines a key on the test network.
+ * Defines a {@link KeyNetworkFactory} producing keys on the test network.
  */
 public class TestNetKeyNetworkFactory extends KeyNetworkFactory {
 	@Override
-	public void createKey() {
-		setEcKey(mEcKeyCreator.createEcKey());
-		setNetworkParameters(NetworkParameters.testNet());
+	public Key createKey() {
+		Key key = new Key();
+
+		key.setEcKey(mEcKeyCreator.createEcKey());
+		key.setNetworkParameters(NetworkParameters.testNet());
+
+		return key;
 	}
 }

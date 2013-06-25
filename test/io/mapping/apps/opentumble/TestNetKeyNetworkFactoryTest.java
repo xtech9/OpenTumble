@@ -30,7 +30,9 @@ public class TestNetKeyNetworkFactoryTest {
 		});
 		assertNotNull(mKeyNetworkFactory.getEcKeyCreator());
 
-		mKeyNetworkFactory.createKey();
-		assertNotNull(mKeyNetworkFactory.getEcKey());
+		Key key = mKeyNetworkFactory.createKey();
+		assertNotNull(key);
+		assertNotNull(key.getEcKey());
+		assertNotNull(key.getNetworkParameters());
 	}
 }

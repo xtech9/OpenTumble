@@ -1,25 +1,24 @@
 package io.mapping.apps.opentumble;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 public class Main {
 	public static void main(String... args) {
 		KeyNetworkFactory keyNetworkFactory = new ProdNetKeyNetworkFactory();
 		keyNetworkFactory.setEcKeyCreator(RandomEcKeyCreator.getCreator());
-		keyNetworkFactory.createKey();
 
-		System.out.println(keyNetworkFactory.getEcKey().toStringWithPrivate());
+		Set<Key> keys = new HashSet<Key>();
+		for (int i = 0; i < 10; i++) {
+			keys.add(keyNetworkFactory.createKey());
+		}
 
-//		KeyNetworkFactory keyNetworkFactory = KeyNetworkFactory.createKey();
-//		ECKey ecKey = keyNetworkFactory.getEcKey();
-//
-//		String publicKey = new String(ecKey.getPubKey());
-//		String privateKey = new String(ecKey.getPrivKeyBytes());
-//
-//		Address address = ecKey.toAddress(keyNetworkFactory.getNetworkParameters());
-//
-//		System.out.println("KeyNetworkFactory:\t" + ecKey.toStringWithPrivate());
-//		System.out.println("KeyNetworkFactory hash:\t" + new String(ecKey.getPubKeyHash()));
-//		System.out.println("Address:\t" + address.toString());
-//		System.out.println("Public:\t" + publicKey);
-//		System.out.println("Private:\t" + privateKey);
+		for (Iterator<Key> keyIterator = keys.iterator(); keyIterator.hasNext(); ) {
+			Key nextKey = keyIterator.next();
+
+			System.out.println(nextKey.getEcKey().toStringWithPrivate());
+			System.out.println("Address:" + nextKey.getEcKey().toAddress(nextKey.getNetworkParameters()).toString());
+		}
 	}
 }
